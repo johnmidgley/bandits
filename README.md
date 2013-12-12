@@ -4,12 +4,14 @@ Clojure implentation of algorithms from [Bandit Algorithms for Website Optimizat
 
 ## Usage
 
+```clj  
 (ns memebrane.algorithms.mab.charts)  
-  
+
 (plot-epsilon-comparison @epsilon-comparison)  
 (plot-softmax-comparison @softmax-comparison)  
 (plot-annealing-softmax-comparison @annealing-softmax-comparison)  
 (plot-ucb-comparison @ucb-comparison)  
+```
 
 ## License
 
