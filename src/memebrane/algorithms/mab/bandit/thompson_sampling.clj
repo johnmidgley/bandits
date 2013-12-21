@@ -4,7 +4,6 @@
             [incanter.distributions :as d]))
 
 (defn thompson-sampling [alpha beta n-arms]
-  (println "thompson-sampling")
   (merge (b/bandit :thompson-sampling n-arms)
          {:alpha alpha :beta beta}))
 
