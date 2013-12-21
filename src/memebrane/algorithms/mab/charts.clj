@@ -3,6 +3,7 @@
             [memebrane.algorithms.mab.bandit.softmax :as sm]
             [memebrane.algorithms.mab.bandit.annealing-softmax :as asm]
             [memebrane.algorithms.mab.bandit.ucb :as u]
+            [memebrane.algorithms.mab.bandit.thompson-sampling :as ts]
             [memebrane.algorithms.mab.arm.bernoulli :as b]
             [memebrane.algorithms.mab.analysis :as a]
             [incanter.core :as i]
@@ -104,6 +105,35 @@
 
 (defn plot-ucb-comparison [comparison]
   (plot-comparison comparison-plot-fns (constantly "UCB") comparison))
+
+(def epsilon-2arms-comparison
+  (future
+    (a/compare-bandits 
+      n-simulations 
+      horizon
+      (mapv b/bernoulli [1/10 9/10]) 
+      (map #(partial e/epsilon-greedy %) epsilons))))
+
+(defn plot-epsilon-2arms-comparison []
+  (plot-comparison comparison-plot-fns epsilon-label @epsilon-2arms-comparison))
+
+
+(def epsilon-200arms-comparison
+  (future
+    (a/compare-bandits 
+      n-simulations 
+      horizon
+      (mapv b/bernoulli (conj (vec (repeat 199 1/10)) 9/10)) 
+      (map #(partial e/epsilon-greedy %) epsilons))))
+
+(defn plot-epsilon-200arms-comparison []
+  (plot-comparison comparison-plot-fns epsilon-label @epsilon-200arms-comparison))
+
+(def thompson-sampling-comparison
+  (comparison [(partial ts/thompson-sampling 1 1)]))
+
+(defn plot-thompson-sampling-comparison [comparison]
+  (plot-comparison comparison-plot-fns (constantly "Thompson Sampling") comparison))
 
 
 
